@@ -42,6 +42,15 @@ export default function WelcomeScreen({navigation}) {
                     />
                 </View>
             </View>
+            <View style={Layout.verticalSpacing}/>
+            <View style={Layout.buttonAlignment}>
+                <View style={Layout.buttonSize}>
+                    <CustomButton
+                        title={"API Integration"}
+                        onPress={() => navigation.navigate('APIScreen')}
+                    />
+                </View>
+            </View>
         </SafeAreaView>
     );
 }
