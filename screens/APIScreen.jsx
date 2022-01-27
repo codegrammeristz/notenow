@@ -1,75 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    View,
-    Text, TouchableOpacity, FlatList,
-} from 'react-native';
-import {Styles, Layout, MainStyle} from "../components/Styles";
-import CustomButton from "../components/CustomButton";
-import {Task} from "../components/Task";
-import todoAPI from "../config/index"
-import axios from "axios";
+import React, {useState, useEffect} from 'react'
+import {View, FlatList} from 'react-native'
+import Card from '../components/Card'
+import newAPI from '../api/index'
 
-export default function APIScreen({navigation}) {
+const APIScreen = () => {
 
-    const [taskItems, setTaskItems] = useState([]);
+    // const [news, setNews] = useState([])
+    const [news, setNews] = useState([]);
 
     useEffect(() => {
-        getTodos()
+        getNewsFromAPI()
     }, [])
 
-    function getTodos() {
-        axios
-            .get('https://jsonplaceholder.typicode.com/todos/4')
-            .then((response) => {
-                setTaskItems([...taskItems, response.data.title])
-                console.log(taskItems.title)
+    function getNewsFromAPI() {
+        newAPI.get('top-headlines?country=us&apiKey=aa6a097fb9fb4509958fdabd1942e6d1')
+            .then(async function (response) {
+                setNews(response.data);
             })
-            .catch((error) => {
+            .catch(function (error) {
                 console.log(error)
             })
     }
 
-    const completeTask = (index) => {
-        let itemsCopy = [...taskItems];
-        itemsCopy.splice(index, 1);
-        setTaskItems(itemsCopy);
-    }
-
-    if (!taskItems) {
+    if (!news) {
         return null
     }
 
     return (
-        <SafeAreaView style={Styles.container}>
-            <ScrollView
-                contentContainerStyle={{
-                    flexGrow: 1
+        <View>
+            <FlatList
+                data={news.articles}
+                keyExtractor={(item, index) => 'key' + index}
+                renderItem={({item}) => {
+                    return <Card item={item}/>
                 }}
-                keyboardShouldPersistTaps='handled'
-            >
-                {/* Today's Tasks */}
-                <View style={MainStyle.tasksWrapper}>
-                    <Text style={Styles.heading}>Today's tasks :</Text>
-                    <View style={MainStyle.items}>
-                        {
-                            /* Map items from the taskItems and show them as tasks */
-                            taskItems.map((item, index) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={index}
-                                        onPress={() => completeTask(index)}
-                                    >
-                                        <Task text={item} />
-                                    </TouchableOpacity>
-                                )
-                            })
-                        }
-                    </View>
-                </View>
-
-            </ScrollView>
-        </SafeAreaView>
-    );
+            />
+        </View>
+    )
 }
+
+export default APIScreen
