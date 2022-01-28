@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: 'gray'
     }
-
 })
 
 export default Card;

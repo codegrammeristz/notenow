@@ -4,8 +4,6 @@ import Card from '../components/Card'
 import newAPI from '../api/index'
 
 const APIScreen = () => {
-
-    // const [news, setNews] = useState([])
     const [news, setNews] = useState([]);
 
     useEffect(() => {
@@ -36,7 +34,7 @@ const APIScreen = () => {
                 }}
             />
         </View>
-    )
+    );
 }
 
 export default APIScreen
