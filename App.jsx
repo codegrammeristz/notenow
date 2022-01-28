@@ -3,6 +3,7 @@ import React from 'react';
 /* Screens */
 import WelcomeScreen from './screens/WelcomeScreen';
 import MainScreen from './screens/MainScreen';
+import APIScreen from './screens/APIScreen';
 
 /* Plugins */
 import { NavigationContainer } from '@react-navigation/native';
@@ -49,6 +50,20 @@ export default function App() {
                     component={MainScreen}
                     options={{
                         title: 'NoteNow',
+                        headerStyle: {
+                            backgroundColor: '#CC9767',
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'light',
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name="APIScreen"
+                    component={APIScreen}
+                    options={{
+                        title: 'API Integration',
                         headerStyle: {
                             backgroundColor: '#CC9767',
                         },
